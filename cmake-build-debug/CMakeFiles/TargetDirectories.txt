@@ -1,0 +1,3 @@
+/Users/michaelcorn/CLionProjects/HotelProject/cmake-build-debug/CMakeFiles/HotelProject.dir
+/Users/michaelcorn/CLionProjects/HotelProject/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/michaelcorn/CLionProjects/HotelProject/cmake-build-debug/CMakeFiles/rebuild_cache.dir
