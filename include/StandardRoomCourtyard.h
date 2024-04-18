@@ -7,12 +7,10 @@
 #include "HotelRoom.h"
 
 class StandardRoomCourtyard : public HotelRoom {
-private:
-    std::string roomView;
 public:
-    StandardRoomCourtyard();
-    double getPrice() const override;
-    double getTotal() const override;
+    StandardRoomCourtyard(double price = 125.0, const std::string& view = "Standard Room, Courtyard");
+    double getPrice();
+    std::string getRoomView();
 };
 
 

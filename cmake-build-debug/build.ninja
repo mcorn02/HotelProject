@@ -77,6 +77,34 @@ build CMakeFiles/HotelProject.dir/src/StandardRoomScenic.cpp.o: CXX_COMPILER__Ho
   OBJECT_DIR = CMakeFiles/HotelProject.dir
   OBJECT_FILE_DIR = CMakeFiles/HotelProject.dir/src
 
+build CMakeFiles/HotelProject.dir/src/ReservationSystem.cpp.o: CXX_COMPILER__HotelProject_unscanned_Debug /Users/michaelcorn/CLionProjects/HotelProject/src/ReservationSystem.cpp || cmake_object_order_depends_target_HotelProject
+  DEP_FILE = CMakeFiles/HotelProject.dir/src/ReservationSystem.cpp.o.d
+  FLAGS = -g -std=gnu++17 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -fcolor-diagnostics
+  INCLUDES = -I/Users/michaelcorn/CLionProjects/HotelProject/include
+  OBJECT_DIR = CMakeFiles/HotelProject.dir
+  OBJECT_FILE_DIR = CMakeFiles/HotelProject.dir/src
+
+build CMakeFiles/HotelProject.dir/src/DeluxeSuite.cpp.o: CXX_COMPILER__HotelProject_unscanned_Debug /Users/michaelcorn/CLionProjects/HotelProject/src/DeluxeSuite.cpp || cmake_object_order_depends_target_HotelProject
+  DEP_FILE = CMakeFiles/HotelProject.dir/src/DeluxeSuite.cpp.o.d
+  FLAGS = -g -std=gnu++17 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -fcolor-diagnostics
+  INCLUDES = -I/Users/michaelcorn/CLionProjects/HotelProject/include
+  OBJECT_DIR = CMakeFiles/HotelProject.dir
+  OBJECT_FILE_DIR = CMakeFiles/HotelProject.dir/src
+
+build CMakeFiles/HotelProject.dir/src/Penthouse.cpp.o: CXX_COMPILER__HotelProject_unscanned_Debug /Users/michaelcorn/CLionProjects/HotelProject/src/Penthouse.cpp || cmake_object_order_depends_target_HotelProject
+  DEP_FILE = CMakeFiles/HotelProject.dir/src/Penthouse.cpp.o.d
+  FLAGS = -g -std=gnu++17 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -fcolor-diagnostics
+  INCLUDES = -I/Users/michaelcorn/CLionProjects/HotelProject/include
+  OBJECT_DIR = CMakeFiles/HotelProject.dir
+  OBJECT_FILE_DIR = CMakeFiles/HotelProject.dir/src
+
+build CMakeFiles/HotelProject.dir/src/HotelGuest.cpp.o: CXX_COMPILER__HotelProject_unscanned_Debug /Users/michaelcorn/CLionProjects/HotelProject/src/HotelGuest.cpp || cmake_object_order_depends_target_HotelProject
+  DEP_FILE = CMakeFiles/HotelProject.dir/src/HotelGuest.cpp.o.d
+  FLAGS = -g -std=gnu++17 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -fcolor-diagnostics
+  INCLUDES = -I/Users/michaelcorn/CLionProjects/HotelProject/include
+  OBJECT_DIR = CMakeFiles/HotelProject.dir
+  OBJECT_FILE_DIR = CMakeFiles/HotelProject.dir/src
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target HotelProject
@@ -85,7 +113,7 @@ build CMakeFiles/HotelProject.dir/src/StandardRoomScenic.cpp.o: CXX_COMPILER__Ho
 #############################################
 # Link the executable HotelProject
 
-build HotelProject: CXX_EXECUTABLE_LINKER__HotelProject_Debug CMakeFiles/HotelProject.dir/src/main.cpp.o CMakeFiles/HotelProject.dir/src/HotelRoom.cpp.o CMakeFiles/HotelProject.dir/src/StandardRoomCourtyard.cpp.o CMakeFiles/HotelProject.dir/src/StandardRoomScenic.cpp.o
+build HotelProject: CXX_EXECUTABLE_LINKER__HotelProject_Debug CMakeFiles/HotelProject.dir/src/main.cpp.o CMakeFiles/HotelProject.dir/src/HotelRoom.cpp.o CMakeFiles/HotelProject.dir/src/StandardRoomCourtyard.cpp.o CMakeFiles/HotelProject.dir/src/StandardRoomScenic.cpp.o CMakeFiles/HotelProject.dir/src/ReservationSystem.cpp.o CMakeFiles/HotelProject.dir/src/DeluxeSuite.cpp.o CMakeFiles/HotelProject.dir/src/Penthouse.cpp.o CMakeFiles/HotelProject.dir/src/HotelGuest.cpp.o
   FLAGS = -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk
   OBJECT_DIR = CMakeFiles/HotelProject.dir
   POST_BUILD = :

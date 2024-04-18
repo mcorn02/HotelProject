@@ -4,19 +4,13 @@
 
 #include "../include/StandardRoomScenic.h"
 
-StandardRoomScenic::StandardRoomScenic()
-{
-    const std::string roomType = "Standard Room, Scenic";
-    const int roomPrice = 145;
-    const int roomTotal = 35;
-}
+StandardRoomScenic::StandardRoomScenic(double price, const std::string& view) : HotelRoom(price, view) {}
 
-double StandardRoomScenic::getPrice() const
-{
+double StandardRoomScenic::getPrice() {
     return roomPrice;
 }
 
-double StandardRoomScenic::getTotal() const
+std::string StandardRoomScenic::getRoomView()
 {
-    return roomTotal;
+    return roomView;
 }

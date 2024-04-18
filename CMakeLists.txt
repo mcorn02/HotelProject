@@ -11,4 +11,12 @@ add_executable(HotelProject src/main.cpp
         src/StandardRoomCourtyard.cpp
         include/StandardRoomCourtyard.h
         src/StandardRoomScenic.cpp
-        include/StandardRoomScenic.h)
+        include/StandardRoomScenic.h
+        src/ReservationSystem.cpp
+        include/ReservationSystem.h
+        src/DeluxeSuite.cpp
+        include/DeluxeSuite.h
+        src/Penthouse.cpp
+        include/Penthouse.h
+        src/HotelGuest.cpp
+        include/HotelGuest.h)

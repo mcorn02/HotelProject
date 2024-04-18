@@ -1,13 +1,26 @@
-#include "StandardRoomCourtyard.cpp"
-#include "StandardRoomScenic.cpp"
-#include <HotelRoom.h>
+#include "ReservationSystem.h"
+#include "HotelGuest.h"
+#include <iostream>
+using namespace std;
+
 
 int main()
 {
-    std::vector<HotelRoom*> HotelRooms;
-    HotelRooms.push_back(new StandardRoomScenic());
-    HotelRooms.push_back(new StandardRoomCourtyard);
+    ReservationSystem reservationSystem;
+    reservationSystem.printRoomData();
+    string name;
 
+    cout << "Enter guest's name: ";
+    cin >> name;
+
+    HotelGuest guest1(name);
+
+    cout << "Guest name: "  << guest1.getName() << "\n";
+
+    struct rusage usage;
+    getrusage(RUSAGE_SELF, &usage);
+
+    std::cout << "Memory usage: " << usage.ru_maxrss << " kilobytes" << std::endl;
 
     return 0;
 }

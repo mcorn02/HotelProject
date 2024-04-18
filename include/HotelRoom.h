@@ -8,12 +8,18 @@
 
 class HotelRoom {
 protected:
-    std::string roomType;
-    int roomPrice;
-    int roomTotal;
+    std::string roomView;
+    double roomPrice;
 public:
-    virtual double getTotal() const = 0;
-    virtual double getPrice() const = 0;
+    HotelRoom(double price, const std::string& view) : roomPrice(price), roomView(view) {};
+    double getPrice()
+    {
+        return roomPrice;
+    }
+    std::string getRoomView()
+    {
+        return roomView;
+    }
     virtual ~HotelRoom() {}
 };
 

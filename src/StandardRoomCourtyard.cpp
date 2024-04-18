@@ -4,19 +4,16 @@
 
 #include "../include/StandardRoomCourtyard.h"
 
-StandardRoomCourtyard::StandardRoomCourtyard()
-{
-    const std::string roomType = "Standard Room, Courtyard";
-    const int roomPrice = 125;
-    const int roomTotal = 70;
-}
+StandardRoomCourtyard::StandardRoomCourtyard(double price, const std::string& view) : HotelRoom(price, view) {}
 
-double StandardRoomCourtyard::getPrice() const
+double StandardRoomCourtyard::getPrice()
 {
     return roomPrice;
 }
 
-double StandardRoomCourtyard::getTotal() const
+std::string StandardRoomCourtyard::getRoomView()
 {
-    return roomTotal;
+    return roomView;
 }
+
+
