@@ -8,3 +8,19 @@ std::string HotelGuest::getName()
 {
     return name;
 }
+
+void HotelGuest::assignRoom(std::string room, double amount)
+{
+    roomType = room;
+    bill = amount;
+}
+
+std::string HotelGuest::getRoom()
+{
+    return roomType;
+}
+
+double HotelGuest::getBill()
+{
+    return bill;
+}
