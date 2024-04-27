@@ -9,7 +9,7 @@
 
 class Penthouse : public HotelRoom {
 public:
-    Penthouse(double price = 1135.0, const std::string& view = "Penthouse");
+    Penthouse(double price, int roomNum, const std::string& view = "Penthouse");
     double getPrice();
     std::string getRoomView();
 };

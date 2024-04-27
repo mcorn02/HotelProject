@@ -11,14 +11,17 @@ class HotelGuest {
 private:
     const std::string name;
     std::string roomType;
-    double bill;
+    int roomNumber;
+    double price;
 public:
-    HotelGuest(const std::string guestName) : name(guestName), roomType("") {}
+    //HotelGuest(const std::string guestName) : name(guestName), assignedRoom(nullptr) {}
+    HotelGuest(const std::string guestName) : name(guestName) {}
     std::string getName();
-    void assignRoom(std::string room, double amount);
-    std::string getRoom();
-    void printInfo() const;
-    double getBill();
+    std::string getRoomType();
+    int getRoomNum();
+    double getPrice();
+    void assignRoom(const std::string& type, int num, double roomPrice);
+    void printRoomData();
 };
 
 

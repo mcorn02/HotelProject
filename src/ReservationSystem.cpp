@@ -9,25 +9,64 @@
 
 void ReservationSystem::mainMenu()
 {
+    std::cout << "Welcome to the Hotel Michael's Reservation System" << std::endl;
+    std::cout << "-------------------------------------------------\n";
+
+    //handles date format
+    bool validDate = false;
+    while(!validDate)
+    {
+        std::cout << "Please enter today's date (MM-DD-YYYY): ";
+        std::cin >> todaysDate;
+
+        if(!validateDateInput(todaysDate))
+        {
+            std::cout << "Invalid date format, Please enter date with format MM-DD-YYYY\n";
+        }
+        else
+        {
+            validDate = true;
+        }
+    }
+
+    std::cout << "-------------------------------------------------\n";
+    setDate(todaysDate);
+    std::cout << "Today's date is " << getdate() << std::endl;
+    std::cout << "-------------------------------------------------\n";
+
+
     int choice;
     do {
         std::cout << "Enter 1 to assign room\n";
-        std::cout << "Enter 2 to print daily report\n";
+        std::cout << "Enter 2 to show available rooms\n";
+        std::cout << "Enter 3 to show daily revenue\n";
+        std::cout << "Enter 4 to print daily report and save to file\n";
+        std::cout << "Enter 5 to open file from a previous day\n";
         std::cout << "Enter 99 to quit \n";
 
         std::cin >> choice;
 
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-
         switch (choice) {
             case 1:
                 roomMenu();
-                mainMenu();
                 break;
             case 2:
+                printAvailableRooms();
+                break;
+            case 3:
+                std::cout << "Revenue for " << todaysDate << "\n";
+                std::cout << "-------------------------------------------------\n";
+                std::cout << "$" << getRevenue() << "\n";
+                std::cout << "\n";
+                break;
+            case 4:
                 printDailyReport();
-                mainMenu();
+                writeRoomDataToFile();
+                break;
+            case 5:
+                openFileFromPreviousDay();
                 break;
             case 99:
                 exit(0);
@@ -38,17 +77,17 @@ void ReservationSystem::mainMenu()
     } while(choice != 99);
 }
 
-void ReservationSystem::printRoomData()
+void ReservationSystem::printAvailableRooms()
 {
     std::cout << "TOTAL ROOMS AVAILABLE: " << totalRooms << "\n";
     std::cout << "-------------------------------------------------\n";
-    std::cout << "Standard Courtyard Rooms available: " << courtYardRooms << ", Rate: $" << courtYardPrice << "\n";
+    std::cout << "Standard Courtyard Rooms available: " << courtyardRoomVec.size() << ", Rate: $" << courtYardPrice << "\n";
     std::cout << "\n";
-    std::cout << "Standard Scenic Rooms available: " << scenicRooms << ", Rate: $" << scenicPrice  << "\n";
+    std::cout << "Standard Scenic Rooms available: " << scenicRoomsVec.size() << ", Rate: $" << scenicPrice  << "\n";
     std::cout << "\n";
-    std::cout << "Deluxe Suites available: " << deluxeRooms << ", Rate: $" << deluxeSuitePrice   << "\n";
+    std::cout << "Deluxe Suites available: " << deluxeSuiteVec.size() << ", Rate: $" << deluxeSuitePrice   << "\n";
     std::cout << "\n";
-    std::cout << "Penthouse Suites available: " << penthouseRooms << ", Rate: $" << penthousePrice << "\n";
+    std::cout << "Penthouse Suites available: " << penthouseVec.size() << ", Rate: $" << penthousePrice << "\n";
     std::cout << "\n";
 }
 
@@ -60,13 +99,11 @@ void ReservationSystem::roomMenu()
     std::cin >> guestName;
     std::cout << "\n";
 
-
+    //creates a new guest object
     std::unique_ptr<HotelGuest> guest = std::make_unique<HotelGuest>(guestName);
+    printAvailableRooms();
 
-
-    printRoomData();
-
-    std::cout << "What room type would they like?\n";
+    std::cout << "What room type would " << guest->getName() << " like?\n";
     std::cout << "-------------------------------------------------\n";
     std::cout << "Enter 1 for Standard Room Courtyard\n";
     std::cout << "Enter 2 for Standard Room Scenic\n";
@@ -74,12 +111,12 @@ void ReservationSystem::roomMenu()
     std::cout << "Enter 4 for Penthouse\n";
     std::cin >> roomType;
 
-
     if(!validateRoomInput(roomType))
     {
         std::cout << "Invalid input" << std::endl;
     }
 
+    //string to int conversion
     int intRoom = stoi(roomType);
 
     switch (intRoom)
@@ -87,15 +124,21 @@ void ReservationSystem::roomMenu()
         case 1:
             if(!courtyardRoomVec.empty())
             {
-                guest->assignRoom(courtyardRoomVec[0]->getRoomView(), courtYardPrice);
+                //Get the StandardRoomCourtyard object from the unique_ptr
+                StandardRoomCourtyard courtyardRoom = std::move(*courtyardRoomVec.back());
+                courtyardRoomVec.pop_back(); //Remove the room from the vector
+
+                //Assign the room data to the guest
+                guest->assignRoom("Standard Courtyard", courtyardRoom.getRoomNum(), courtyardRoom.getPrice());
+
                 std::cout << "\n";
-                std::cout << guest->getName() << " has been assigned a " << guest->getRoom() << " for $" << courtYardPrice << "\n";
+                std::cout << guest->getName() << " has been assigned a " << guest->getRoomType() << ", Room Number: " << guest->getRoomNum() << " for $" << guest->getPrice() << "\n";
                 std::cout << "\n";
-                courtyardRoomVec.pop_back();
-                courtYardRooms--;
+
+                courtYardRoomsCount--;
                 totalRooms--;
-                updateRevenue(courtYardPrice);
-                guestDataVec.push_back(std::move(guest));
+                updateRevenue(guest->getPrice());
+                guestDataVec.push_back(std::move(guest)); //Move the guest object into the vector
             }
             else
             {
@@ -105,14 +148,18 @@ void ReservationSystem::roomMenu()
         case 2:
             if(!scenicRoomsVec.empty())
             {
-                guest->assignRoom(scenicRoomsVec[0]->getRoomView(), scenicPrice);
-                std::cout << "\n";
-                std::cout << guest->getName() << " has been assigned a " << guest->getRoom() << " for $" << scenicPrice << "\n";
-                std::cout << "\n";
+                StandardRoomScenic scenicRoom = std::move(*scenicRoomsVec.back());
                 scenicRoomsVec.pop_back();
-                scenicRooms--;
+
+                guest->assignRoom("Standard Scenic", scenicRoom.getRoomNum(), scenicRoom.getPrice());
+
+                std::cout << "\n";
+                std::cout << guest->getName() << " has been assigned a " << guest->getRoomType() << ", Room Number: " << guest->getRoomNum() << " for $" << guest->getPrice() << "\n";
+                std::cout << "\n";
+
+                scenicRoomsCount--;
                 totalRooms--;
-                updateRevenue(scenicPrice);
+                updateRevenue(guest->getPrice());
                 guestDataVec.push_back(std::move(guest));
             }
             else
@@ -123,14 +170,18 @@ void ReservationSystem::roomMenu()
         case 3:
             if(!deluxeSuiteVec.empty())
             {
-                guest->assignRoom(deluxeSuiteVec[0]->getRoomView(), deluxeSuitePrice);
-                std::cout << "\n";
-                std::cout << guest->getName() << " has been assigned a " << guest->getRoom() << " for $" << deluxeSuitePrice << "\n";
-                std::cout << "\n";
+                DeluxeSuite deluxeRoom = std::move(*deluxeSuiteVec.back());
                 deluxeSuiteVec.pop_back();
-                deluxeRooms--;
+
+                guest->assignRoom("Deluxe Suite", deluxeRoom.getRoomNum(), deluxeRoom.getPrice());
+
+                std::cout << "\n";
+                std::cout << guest->getName() << " has been assigned a " << guest->getRoomType() << ", Room Number: " << guest->getRoomNum() << " for $" << guest->getPrice() << "\n";
+                std::cout << "\n";
+
+                deluxeRoomsCount--;
                 totalRooms--;
-                updateRevenue(deluxeSuitePrice);
+                updateRevenue(guest->getPrice());
                 guestDataVec.push_back(std::move(guest));
             }
             else
@@ -141,14 +192,18 @@ void ReservationSystem::roomMenu()
         case 4:
             if(!penthouseVec.empty())
             {
-                guest->assignRoom(penthouseVec[0]->getRoomView(), penthousePrice);
-                std::cout << "\n";
-                std::cout << guest->getName() << " has been assigned a " << guest->getRoom() << " for $" << penthousePrice << "\n";
-                std::cout << "\n";
+                Penthouse penthouseRoom = std::move(*penthouseVec.back());
                 penthouseVec.pop_back();
-                penthouseRooms--;
+
+                guest->assignRoom("Penthouse", penthouseRoom.getRoomNum(), penthouseRoom.getPrice());
+
+                std::cout << "\n";
+                std::cout << guest->getName() << " has been assigned a " << guest->getRoomType() << ", Room Number: " << guest->getRoomNum() << " for $" << guest->getPrice() << "\n";
+                std::cout << "\n";
+
+                penthouseRoomsCount--;
                 totalRooms--;
-                updateRevenue(penthousePrice);
+                updateRevenue(guest->getPrice());
                 guestDataVec.push_back(std::move(guest));
             }
             else
@@ -160,6 +215,12 @@ void ReservationSystem::roomMenu()
             std::cout << "Invalid input";
             mainMenu();
     }
+}
+
+bool ReservationSystem::validateDateInput(std::string &inp)
+{
+    std::regex pattern("^(0[1-9]|1[0-2])-(0[1-9]|1\\d|2\\d|3[01])-(19|20)\\d{2}$");
+    return std::regex_match(inp, pattern);
 }
 
 bool ReservationSystem::validateRoomInput(std::string& inp)
@@ -196,14 +257,86 @@ void ReservationSystem::printDailyReport()
     std::cout << "\n";
     std::cout << "GUEST DATA" << "\n";
     std::cout << "-------------------------------------------------\n";
-    for(auto& guest : guestDataVec)
-    {
-        std::cout << "Name: " << guest->getName() << ", Room: " << guest->getRoom() << " Rate: $" << guest->getBill() << "\n";
-        std::cout << "\n";
+    printGuestDataVec();
+    printAvailableRooms();
+}
+
+void ReservationSystem::writeRoomDataToFile()
+{ //Open the file for writing
+    std::ofstream outFile("hotel_data_" + todaysDate + ".txt");
+
+    //Check if the file was opened successfully
+    if (!outFile.is_open()) {
+        std::cerr << "Error opening file!" << std::endl;
+        return;
     }
-    std::cout << "\n";
 
-    printRoomData();
+    //Write room data to the file
+    outFile << todaysDate << "\n";
+    outFile << "ROOM DATA\n";
+    outFile << "-------------------------------------------------\n";
+    outFile << "TOTAL ROOMS AVAILABLE: " << totalRooms << "\n";
+    outFile << "Standard Courtyard Rooms available: " << courtYardRoomsCount << ", Rate: $" << courtYardPrice << "\n";
+    outFile << "Standard Scenic Rooms available: " << scenicRoomsCount << ", Rate: $" << scenicPrice  << "\n";
+    outFile << "Deluxe Suites available: " << deluxeRoomsCount << ", Rate: $" << deluxeSuitePrice   << "\n";
+    outFile << "Penthouse Suites available: " << penthouseRoomsCount << ", Rate: $" << penthousePrice << "\n\n";
 
+    //Write guest data to the file
+    outFile << "GUEST DATA\n";
+    outFile << "-------------------------------------------------\n";
+    for(const auto& guest : guestDataVec)
+    {
+       outFile << "Name: " << guest->getName() << ", Room: " << guest->getRoomNum() << ", Rate: $" << guest->getPrice() << "\n";
+    }
+    outFile << "\n";
+
+    // Close the file
+    outFile.close();
+
+
+    //Check if the file was closed successfully
+    if (!outFile) {
+        std::cerr << "Error closing file!" << std::endl;
+        return;
+    }
+    std::cout << "File saved successfully\n";
     std::cout << "\n";
+}
+
+void ReservationSystem::openFileFromPreviousDay()
+{
+        std::string fileName;
+        std::cout << "Enter file name from previous day (ex: hotel_data_01-01-2000.txt): ";
+        std::cin >> fileName;
+        std::cout << "\n";
+
+        std::cout << "Attempting to open file: " << fileName << "\n";
+        std::cout << "\n";
+
+        // Attempt to open the file
+        std::ifstream inFile(fileName);
+        if (inFile.is_open()) {
+            std::cout << "File found. Contents:\n";
+            std::string line;
+            while (std::getline(inFile, line)) {
+                std::cout << line << std::endl;
+            }
+            inFile.close();
+        } else {
+            std::cerr << "Error opening file or file not found.\n";
+        }
+        std::cout << "\n";
+}
+
+void ReservationSystem::printGuestDataVec() {
+    for (auto& guest: guestDataVec) {
+        if (guest) {
+            std::cout << "Name: " << guest->getName() << ", Room Type: " << guest->getRoomType() << ", Room Number: " << guest->getRoomNum() << ", Price: $" << guest->getPrice() << "\n";
+            std::cout << "\n";
+        }
+        else
+        {
+            std::cout << "guest has not been assigned a room\n";
+        }
+    }
 }

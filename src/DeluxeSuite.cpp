@@ -4,7 +4,7 @@
 
 #include "DeluxeSuite.h"
 
-DeluxeSuite::DeluxeSuite(double price, const std::string &view) : HotelRoom(price, view) {}
+DeluxeSuite::DeluxeSuite(double price, int roomNum, const std::string &view) : HotelRoom(price, roomNum, view) {}
 
 double DeluxeSuite::getPrice()
 {

@@ -4,7 +4,7 @@
 
 #include "Penthouse.h"
 
-Penthouse::Penthouse(double price, const std::string &view) : HotelRoom(price, view) {}
+Penthouse::Penthouse(double price, int roomNum, const std::string &view) : HotelRoom(price, roomNum, view) {}
 
 double Penthouse::getPrice()
 {

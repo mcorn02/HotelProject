@@ -4,7 +4,7 @@
 
 #include "../include/StandardRoomScenic.h"
 
-StandardRoomScenic::StandardRoomScenic(double price, const std::string& view) : HotelRoom(price, view) {}
+StandardRoomScenic::StandardRoomScenic(double price, int roomNum, const std::string& view) : HotelRoom(price, roomNum, view) {}
 
 double StandardRoomScenic::getPrice() {
     return roomPrice;

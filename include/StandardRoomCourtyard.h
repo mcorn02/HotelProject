@@ -8,7 +8,7 @@
 
 class StandardRoomCourtyard : public HotelRoom {
 public:
-    StandardRoomCourtyard(double price = 125.0, const std::string& view = "Standard Room, Courtyard");
+    StandardRoomCourtyard(double price, int roomNum, const std::string& view = "Standard Room, Courtyard");
     double getPrice();
     std::string getRoomView();
 };

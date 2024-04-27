@@ -9,7 +9,7 @@
 
 class DeluxeSuite : public HotelRoom {
 public:
-    DeluxeSuite(double price = 350.0, const std::string& view = "Deluxe Suite");
+    DeluxeSuite(double price, int roomNum, const std::string& view = "Deluxe Suite");
     double getPrice();
     std::string getRoomView();
 };

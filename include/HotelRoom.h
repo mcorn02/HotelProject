@@ -10,12 +10,20 @@ class HotelRoom {
 protected:
     std::string roomView;
     double roomPrice;
+    int roomNumber;
 public:
-    HotelRoom(double price, const std::string& view) : roomPrice(price), roomView(view) {};
+    HotelRoom(double price, int roomNum, const std::string& view) : roomPrice(price), roomNumber(roomNum), roomView(view) {};
+
     double getPrice()
     {
         return roomPrice;
     }
+
+    int getRoomNum()
+    {
+        return roomNumber;
+    }
+
     std::string getRoomView()
     {
         return roomView;

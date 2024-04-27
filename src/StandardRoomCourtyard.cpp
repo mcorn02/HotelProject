@@ -4,7 +4,7 @@
 
 #include "../include/StandardRoomCourtyard.h"
 
-StandardRoomCourtyard::StandardRoomCourtyard(double price, const std::string& view) : HotelRoom(price, view) {}
+StandardRoomCourtyard::StandardRoomCourtyard(double price, int roomNum, const std::string& view) : HotelRoom(price, roomNum, view) {}
 
 double StandardRoomCourtyard::getPrice()
 {

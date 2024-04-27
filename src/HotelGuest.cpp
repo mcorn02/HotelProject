@@ -9,18 +9,28 @@ std::string HotelGuest::getName()
     return name;
 }
 
-void HotelGuest::assignRoom(std::string room, double amount)
-{
-    roomType = room;
-    bill = amount;
-}
-
-std::string HotelGuest::getRoom()
+std::string HotelGuest::getRoomType()
 {
     return roomType;
 }
 
-double HotelGuest::getBill()
+int HotelGuest::getRoomNum()
 {
-    return bill;
+    return roomNumber;
+}
+
+double HotelGuest::getPrice()
+{
+    return price;
+}
+
+void HotelGuest::assignRoom(const std::string& type, int number, double roomPrice) {
+    roomType = type;
+    roomNumber = number;
+    price = roomPrice;
+}
+
+void HotelGuest::printRoomData()
+{
+    //std::cout << "Name: " << name << " Assigned Room Type: " << getAssignedRoom()->getRoomView() << ", Room Number: " << getAssignedRoom()->getRoomNum() << ", Room Price: $" << getAssignedRoom()->getPrice() << "\n";
 }

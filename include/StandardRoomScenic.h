@@ -8,7 +8,7 @@
 
 class StandardRoomScenic : public HotelRoom {
 public:
-    StandardRoomScenic(double price = 145.0, const std::string& roomView = "Standard Room, Scenic");
+    StandardRoomScenic(double price, int roomNum, const std::string& roomView = "Standard Room, Scenic");
     double getPrice();
     std::string getRoomView();
 };
